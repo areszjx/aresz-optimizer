@@ -1,37 +1,104 @@
 @echo off
-setlocal EnableExtensions
+setlocal EnableExtensions EnableDelayedExpansion
 chcp 65001 >nul
+mode con cols=88 lines=32 >nul 2>&1
 color 0D
-title ARES Optimizer - Minecraft
-for /f "tokens=4" %%G in ('powercfg /getactivescheme') do set "OLD_SCHEME=%%G"
-echo ==============================================
-echo     ARES SAFE OPTIMIZER - MINECRAFT
-echo ==============================================
+title AresZ ^| ARES Advanced Session Optimizer - Minecraft
+set "GAME=Minecraft"
+set "ID=minecraft"
+set "ROOT=%LOCALAPPDATA%\AresZ\ARES"
+set "LOGDIR=%ROOT%\Logs"
+set "BACKUP=%ROOT%\%ID%-power.txt"
+if not exist "%LOGDIR%" mkdir "%LOGDIR%" >nul 2>&1
+net session >nul 2>&1
+if errorlevel 1 (powershell -NoProfile -Command "Start-Process -FilePath '%~f0' -Verb RunAs" & exit /b)
+:MENU
+cls
+call :HEADER
+echo [1] Iniciar Performance Session monitorada
+echo [2] Aplicar boost rapido ao processo
+echo [3] Diagnostico do jogo e sistema
+echo [4] Restaurar plano de energia salvo
+echo [5] Abrir pasta de logs
+echo [0] Sair
+set /p "OP=Opcao: "
+if "%OP%"=="1" goto SESSION
+if "%OP%"=="2" goto QUICK
+if "%OP%"=="3" goto DIAG
+if "%OP%"=="4" goto RESTORE
+if "%OP%"=="5" start "" "%LOGDIR%" & goto MENU
+if "%OP%"=="0" goto END
+goto MENU
+:HEADER
+echo ================================================================================
+echo   AresZ  //  ARES ADVANCED SESSION OPTIMIZER
+echo   GAME PROFILE: %GAME%  //  Java + Bedrock Auto Detect
+echo ================================================================================
 echo.
-echo Abra o Minecraft e pressione qualquer tecla aqui.
-echo O BAT detecta Java ou Bedrock, usa High Performance temporariamente
-echo e prioridade High. Nao altera mods, saves ou arquivos do jogo.
-pause >nul
-set "PROC="
-set "PNAME="
-tasklist /FI "IMAGENAME eq javaw.exe" | find /I "javaw.exe" >nul && (set "PROC=javaw.exe" & set "PNAME=javaw")
-if not defined PROC tasklist /FI "IMAGENAME eq Minecraft.Windows.exe" | find /I "Minecraft.Windows.exe" >nul && (set "PROC=Minecraft.Windows.exe" & set "PNAME=Minecraft.Windows")
-if not defined PROC goto NOTFOUND
+exit /b
+:SAVEPOWER
+for /f "tokens=4" %%G in ('powercfg /getactivescheme') do >"%BACKUP%" echo %%G
+exit /b
+:DETECT
+tasklist /FI "IMAGENAME eq javaw.exe" | find /I "javaw.exe" >nul && (set "PROC=javaw.exe"&set "PNAME=javaw"&exit /b 0)
+tasklist /FI "IMAGENAME eq Minecraft.Windows.exe" | find /I "Minecraft.Windows.exe" >nul && (set "PROC=Minecraft.Windows.exe"&set "PNAME=Minecraft.Windows"&exit /b 0)
+exit /b 1
+:WAITPROC
+call :DETECT
+if not errorlevel 1 exit /b 0
+echo [ARES] Minecraft ainda nao foi detectado.
+choice /c WM /n /m "[W] Aguardar  [M] Menu: "
+if errorlevel 2 exit /b 1
+for /l %%N in (1,1,90) do (call :DETECT & if not errorlevel 1 exit /b 0 & timeout /t 2 /nobreak >nul)
+exit /b 1
+:PRIORITY
+powershell -NoProfile -Command "$p=Get-Process -Name '%PNAME%' -ErrorAction SilentlyContinue;if($p){$p.PriorityClass='High'}" >nul 2>&1
+exit /b
+:SESSION
+call :SAVEPOWER
 powercfg /setactive SCHEME_MIN >nul 2>&1
-powershell -NoProfile -Command "$p=Get-Process -Name '%PNAME%' -ErrorAction SilentlyContinue; if($p){$p.PriorityClass='High'}" >nul 2>&1
-echo [ARES] Otimizacao aplicada em %PROC%. Nao feche esta janela.
-:WAIT
-timeout /t 5 /nobreak >nul
+call :WAITPROC
+if errorlevel 1 goto MENU
+call :PRIORITY
+>>"%LOGDIR%\%ID%-session.log" echo [%date% %time%] SESSION START - %PROC%
+echo [ARES] Detectado: %PROC%. Monitoramento ativo.
+:MONITOR
+timeout /t 10 /nobreak >nul
 tasklist /FI "IMAGENAME eq %PROC%" | find /I "%PROC%" >nul
-if not errorlevel 1 goto WAIT
-goto RESTORE
-:NOTFOUND
-echo [ARES] Minecraft Java/Bedrock nao encontrado. Abra o jogo e tente novamente.
+if errorlevel 1 goto AUTORESTORE
+call :PRIORITY
+goto MONITOR
+:AUTORESTORE
+call :RESTORECORE
+>>"%LOGDIR%\%ID%-session.log" echo [%date% %time%] SESSION END
+echo [ARES] Minecraft fechado. Estado restaurado.
+timeout /t 3 /nobreak >nul
+goto MENU
+:QUICK
+call :SAVEPOWER
+powercfg /setactive SCHEME_MIN >nul 2>&1
+call :WAITPROC
+if errorlevel 1 goto MENU
+call :PRIORITY
+echo [ARES] Boost rapido aplicado em %PROC%.
 pause
-goto END
+goto MENU
+:DIAG
+cls
+call :HEADER
+powercfg /getactivescheme
+call :DETECT
+if errorlevel 1 (echo Processo Minecraft nao encontrado.) else (echo Processo: %PROC% & powershell -NoProfile -Command "$p=Get-Process -Name '%PNAME%' -ErrorAction SilentlyContinue;if($p){'Priority: '+$p.PriorityClass+' | PID: '+$p.Id}")
+powershell -NoProfile -Command "$c=Get-CimInstance Win32_Processor|Select -First 1;$g=Get-CimInstance Win32_VideoController|Select -First 1;'CPU: '+$c.Name;'GPU: '+$g.Name"
+pause
+goto MENU
 :RESTORE
-if defined OLD_SCHEME powercfg /setactive %OLD_SCHEME% >nul 2>&1
-echo [ARES] Plano anterior restaurado.
-timeout /t 2 >nul
+call :RESTORECORE
+echo [ARES] Plano salvo restaurado.
+pause
+goto MENU
+:RESTORECORE
+if exist "%BACKUP%" (set /p "OLD="<"%BACKUP%" & if defined OLD powercfg /setactive !OLD! >nul 2>&1)
+exit /b
 :END
 endlocal
