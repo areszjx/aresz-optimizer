@@ -1,35 +1,104 @@
 @echo off
-setlocal EnableExtensions
+setlocal EnableExtensions EnableDelayedExpansion
 chcp 65001 >nul
+mode con cols=88 lines=32 >nul 2>&1
 color 0D
-title ARES Optimizer - PUBG
+title AresZ ^| ARES Advanced Session Optimizer - PUBG
+set "GAME=PUBG Battlegrounds"
+set "ID=pubg"
 set "PROC=TslGame.exe"
 set "PNAME=TslGame"
-for /f "tokens=4" %%G in ('powercfg /getactivescheme') do set "OLD_SCHEME=%%G"
-echo ==============================================
-echo       ARES SAFE OPTIMIZER - PUBG
-echo ==============================================
+set "ROOT=%LOCALAPPDATA%\AresZ\ARES"
+set "LOGDIR=%ROOT%\Logs"
+set "BACKUP=%ROOT%\%ID%-power.txt"
+if not exist "%LOGDIR%" mkdir "%LOGDIR%" >nul 2>&1
+net session >nul 2>&1
+if errorlevel 1 (powershell -NoProfile -Command "Start-Process -FilePath '%~f0' -Verb RunAs" & exit /b)
+:MENU
+cls
+call :HEADER
+echo [1] Iniciar Performance Session monitorada
+echo [2] Aplicar boost rapido ao processo
+echo [3] Diagnostico do jogo e sistema
+echo [4] Restaurar plano de energia salvo
+echo [5] Abrir pasta de logs
+echo [0] Sair
 echo.
-echo Abra o PUBG e pressione qualquer tecla aqui.
-echo O BAT usa High Performance temporariamente e prioridade High.
-pause >nul
-tasklist /FI "IMAGENAME eq %PROC%" | find /I "%PROC%" >nul
-if errorlevel 1 goto NOTFOUND
-powercfg /setactive SCHEME_MIN >nul 2>&1
+set /p "OP=Selecione uma opcao: "
+if "%OP%"=="1" goto SESSION
+if "%OP%"=="2" goto QUICK
+if "%OP%"=="3" goto DIAG
+if "%OP%"=="4" goto RESTORE
+if "%OP%"=="5" start "" "%LOGDIR%" & goto MENU
+if "%OP%"=="0" goto END
+goto MENU
+:HEADER
+echo ================================================================================
+echo   AresZ  //  ARES ADVANCED SESSION OPTIMIZER
+echo   GAME PROFILE: %GAME%
+echo ================================================================================
+echo.
+exit /b
+:SAVEPOWER
+for /f "tokens=4" %%G in ('powercfg /getactivescheme') do >"%BACKUP%" echo %%G
+exit /b
+:WAITPROC
+tasklist /FI "IMAGENAME eq %PROC%" | find /I "%PROC%" >nul && exit /b 0
+echo [ARES] %GAME% ainda nao foi detectado.
+choice /c WM /n /m "[W] Aguardar automaticamente  [M] Voltar ao menu: "
+if errorlevel 2 exit /b 1
+for /l %%N in (1,1,90) do (tasklist /FI "IMAGENAME eq %PROC%" | find /I "%PROC%" >nul && exit /b 0 & timeout /t 2 /nobreak >nul)
+exit /b 1
+:PRIORITY
 powershell -NoProfile -Command "$p=Get-Process -Name '%PNAME%' -ErrorAction SilentlyContinue; if($p){$p.PriorityClass='High'}" >nul 2>&1
-echo [ARES] Otimizacao aplicada. Nao feche esta janela.
-:WAIT
-timeout /t 5 /nobreak >nul
+exit /b
+:SESSION
+cls
+call :HEADER
+call :SAVEPOWER
+powercfg /setactive SCHEME_MIN >nul 2>&1
+call :WAITPROC
+if errorlevel 1 goto MENU
+call :PRIORITY
+>>"%LOGDIR%\%ID%-session.log" echo [%date% %time%] SESSION START - High Performance + Priority High
+echo [ARES] Session ativa. Monitoramento iniciado.
+:MONITOR
+timeout /t 10 /nobreak >nul
 tasklist /FI "IMAGENAME eq %PROC%" | find /I "%PROC%" >nul
-if not errorlevel 1 goto WAIT
-goto RESTORE
-:NOTFOUND
-echo [ARES] PUBG nao encontrado. Abra o jogo e tente novamente.
+if errorlevel 1 goto AUTORESTORE
+call :PRIORITY
+goto MONITOR
+:AUTORESTORE
+call :RESTORECORE
+>>"%LOGDIR%\%ID%-session.log" echo [%date% %time%] SESSION END - Power plan restored
+echo [ARES] Jogo encerrado. Plano anterior restaurado.
+timeout /t 3 /nobreak >nul
+goto MENU
+:QUICK
+call :SAVEPOWER
+powercfg /setactive SCHEME_MIN >nul 2>&1
+call :WAITPROC
+if errorlevel 1 goto MENU
+call :PRIORITY
+echo [ARES] Boost rapido aplicado.
 pause
-goto END
+goto MENU
+:DIAG
+cls
+call :HEADER
+powercfg /getactivescheme
+tasklist /FI "IMAGENAME eq %PROC%"
+powershell -NoProfile -Command "$p=Get-Process -Name '%PNAME%' -ErrorAction SilentlyContinue; if($p){'Priority: '+$p.PriorityClass+' | PID: '+$p.Id}else{'Processo nao encontrado'}"
+powershell -NoProfile -Command "$c=Get-CimInstance Win32_Processor|Select -First 1;$g=Get-CimInstance Win32_VideoController|Select -First 1;$o=Get-CimInstance Win32_OperatingSystem;'CPU: '+$c.Name;'GPU: '+$g.Name;'RAM livre: '+[math]::Round($o.FreePhysicalMemory/1MB,1)+' GB'"
+pause
+goto MENU
 :RESTORE
-if defined OLD_SCHEME powercfg /setactive %OLD_SCHEME% >nul 2>&1
-echo [ARES] Plano anterior restaurado.
-timeout /t 2 >nul
+call :RESTORECORE
+echo [ARES] Plano salvo restaurado.
+pause
+goto MENU
+:RESTORECORE
+if exist "%BACKUP%" (set /p "OLD="<"%BACKUP%" & if defined OLD powercfg /setactive !OLD! >nul 2>&1)
+exit /b
 :END
 endlocal
