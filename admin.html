@@ -1,41 +1,78 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ARES Admin</title>
-<style>
-:root{--bg:#08090f;--p:#11131d;--p2:#181a27;--t:#f5f3ff;--m:#aaa8bd;--a:#c735ff;--a2:#7a24d6;--g:#3ee58e;--r:#ff5577;--b:#34274c}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 10%,#7a24d622,transparent 26%),var(--bg);color:var(--t);font:14px Segoe UI,Arial,sans-serif}a{text-decoration:none;color:inherit}button,input,textarea,select{font:inherit}.top{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 4vw;border-bottom:1px solid var(--b);background:#08090fee;position:sticky;top:0;z-index:20;backdrop-filter:blur(14px)}.brand{display:flex;gap:11px;align-items:center;font-weight:900;font-size:18px}.mark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;font-size:23px;background:linear-gradient(135deg,var(--a),#ff21d0);box-shadow:0 0 25px #c735ff55}.brand span{color:var(--a);font-style:italic}.top-actions{display:flex;gap:9px}.btn{border:1px solid var(--b);background:var(--p2);color:var(--t);padding:10px 13px;border-radius:10px;cursor:pointer;font-weight:700}.btn:hover{border-color:var(--a)}.btn.primary{background:linear-gradient(90deg,var(--a2),var(--a));border-color:transparent}.btn.danger{background:#4b1723;color:#ff9aac}.wrap{width:min(1450px,94vw);margin:28px auto 60px}.hero{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:20px}.ey{color:#d47cff;font-size:11px;letter-spacing:2px;font-weight:900}.hero h1{font-size:38px;margin:7px 0 6px}.muted{color:var(--m)}.notice{background:#171221;border:1px solid #54346a;border-radius:14px;padding:13px 15px;color:#d9c5e7;margin:18px 0}.layout{display:grid;grid-template-columns:330px 1fr;gap:18px}.panel{background:var(--p);border:1px solid var(--b);border-radius:18px;padding:18px;box-shadow:0 16px 50px #0002}.panel h2,.panel h3{margin-top:0}.field{display:block;margin:13px 0;color:var(--m);font-size:12px}.field input,.field textarea,.field select{width:100%;margin-top:6px;background:var(--p2);border:1px solid var(--b);color:var(--t);padding:10px;border-radius:10px;outline:none}.field textarea{min-height:92px;resize:vertical}.field input:focus,.field textarea:focus{border-color:var(--a)}.side-actions{display:grid;gap:8px;margin-top:16px}.games-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.game{border:1px solid var(--b);background:#0d0f17;border-radius:15px;margin-bottom:12px;overflow:hidden}.game summary{cursor:pointer;padding:14px 16px;font-weight:800;background:var(--p2);display:flex;align-items:center;justify-content:space-between}.game-body{padding:15px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}.game-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}.json{width:100%;min-height:300px;background:#08090f;border:1px solid var(--b);color:#d6d0df;border-radius:12px;padding:13px;font:12px Consolas,monospace;resize:vertical}.status{position:fixed;right:18px;bottom:18px;padding:12px 15px;border-radius:12px;background:#10151d;border:1px solid #28563e;color:#8affb7;box-shadow:0 15px 50px #0007;opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}.status.on{opacity:1;transform:none}.divider{height:1px;background:var(--b);margin:18px 0}.preview{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.stat{background:var(--p2);border:1px solid var(--b);border-radius:12px;padding:12px}.stat strong{font-size:22px;display:block;color:#e569ff}.stat small{color:var(--m)}@media(max-width:950px){.layout{grid-template-columns:1fr}.two,.three{grid-template-columns:1fr}.hero{align-items:stretch;flex-direction:column}.top{padding:0 3vw}.top-actions .hide-mobile{display:none}}@media(max-width:600px){.wrap{width:96vw}.hero h1{font-size:31px}.games-head{align-items:stretch;flex-direction:column}.preview{grid-template-columns:1fr}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#070911">
+  <meta name="robots" content="noindex,nofollow">
+  <title>ARES Admin • AresZ</title>
+  <link rel="icon" type="image/svg+xml" href="assets/ares-mark.svg">
+  <link rel="stylesheet" href="assets/styles.css?v=4.0.0">
+  <link rel="stylesheet" href="assets/admin.css?v=4.0.0">
 </head>
-<body>
-<header class="top"><div class="brand"><div class="mark">A</div><div>ARES <span>ADMIN</span></div></div><div class="top-actions"><a class="btn hide-mobile" href="index.html">← Ver site</a><button class="btn primary" id="saveBtn">Salvar preview</button></div></header>
-<div class="wrap">
-<div class="hero"><div><div class="ey">ARES GAMING HUB</div><h1>Painel de Administração</h1><div class="muted">Edite jogos, downloads, dicas e os textos principais sem mexer no código do site.</div></div><div class="preview"><div class="stat"><strong id="gameCount">0</strong><small>jogos</small></div><div class="stat"><strong id="downloadCount">0</strong><small>downloads</small></div><div class="stat"><strong id="catCount">0</strong><small>categorias</small></div></div></div>
-<div class="notice"><strong>Importante:</strong> o GitHub Pages é um site estático. O botão “Salvar preview” grava as alterações apenas neste navegador. Para publicar para todo mundo, use “Exportar JSON” e depois me envie o arquivo/configuração para eu atualizar o repositório.</div>
-<div class="layout">
-<aside class="panel"><h2>Site</h2><label class="field">Título principal<textarea id="heroTitle"></textarea></label><label class="field">Descrição principal<textarea id="heroText"></textarea></label><label class="field">Categorias <small>(ID|Nome, uma por linha)</small><textarea id="cats"></textarea></label><div class="side-actions"><button class="btn primary" id="applySite">Aplicar campos</button><button class="btn" id="exportBtn">Exportar JSON</button><button class="btn" id="copyBtn">Copiar JSON</button><button class="btn danger" id="resetBtn">Restaurar padrão</button></div><div class="divider"></div><h3>Configuração bruta</h3><textarea class="json" id="jsonBox"></textarea><div class="side-actions"><button class="btn" id="loadJson">Aplicar JSON</button></div></aside>
-<main class="panel"><div class="games-head"><div><h2 style="margin-bottom:4px">Jogos & Downloads</h2><div class="muted">Cada jogo pode ter dicas e vários arquivos de download.</div></div><button class="btn primary" id="addGame">+ Adicionar jogo</button></div><div id="games"></div></main>
-</div></div><div class="status" id="status">Salvo</div>
-<script>
-let DEFAULT=null,cfg=null;const $=id=>document.getElementById(id);const esc=s=>String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));
-async function loadDefault(){try{let html=await fetch('index.html?admin='+Date.now()).then(r=>r.text());let m=html.match(/const DEFAULT=(\{[\s\S]*?\});\s*let cfg=/);if(!m)throw new Error('DEFAULT não encontrado');DEFAULT=Function('return ('+m[1]+')')();}catch(e){DEFAULT={heroTitle:"ARES Gaming Hub",heroText:"Configs e otimizações para jogos.",cats:[["all","Todos"],["fps","FPS"]],games:[]}}try{cfg=JSON.parse(localStorage.aresCfg)||structuredClone(DEFAULT)}catch(e){cfg=JSON.parse(JSON.stringify(DEFAULT))}renderAll()}
-function toast(msg){status.textContent=msg;status.classList.add('on');clearTimeout(window._st);window._st=setTimeout(()=>status.classList.remove('on'),1800)}
-function counts(){gameCount.textContent=cfg.games.length;downloadCount.textContent=cfg.games.reduce((n,g)=>n+(g.dl||[]).length,0);catCount.textContent=cfg.cats.length}
-function siteFields(){heroTitle.value=cfg.heroTitle||'';heroText.value=cfg.heroText||'';cats.value=(cfg.cats||[]).map(c=>c[0]+'|'+c[1]).join('\n')}
-function syncJson(){jsonBox.value=JSON.stringify(cfg,null,2);counts()}
-function gameHtml(g,i){let tips=(g.tips||[]).join('\n'),dls=(g.dl||[]).map(d=>`${d[0]}|${d[1]}|${String(d[2]||'').replace(/\n/g,'\\n')}`).join('\n');return `<details class="game" open><summary><span>${esc(g.name||'Novo jogo')}</span><small class="muted">${esc(g.id||'sem-id')}</small></summary><div class="game-body"><div class="two"><label class="field">Nome<input data-i="${i}" data-k="name" value="${esc(g.name||'')}"></label><label class="field">ID<input data-i="${i}" data-k="id" value="${esc(g.id||'')}"></label></div><div class="two"><label class="field">Categorias <small>(vírgula)</small><input data-i="${i}" data-k="cat" value="${esc((g.cat||[]).join(','))}"></label><label class="field">Cor / background da capa<input data-i="${i}" data-k="cover" value="${esc(g.cover||'linear-gradient(135deg,#7a24d6,#111)')}"></label></div><label class="field">Descrição<textarea data-i="${i}" data-k="desc">${esc(g.desc||'')}</textarea></label><div class="two"><label class="field">Dicas <small>(uma por linha)</small><textarea data-i="${i}" data-k="tips">${esc(tips)}</textarea></label><label class="field">Downloads <small>(Nome|extensão|conteúdo; uma linha por download)</small><textarea data-i="${i}" data-k="dl">${esc(dls)}</textarea></label></div><div class="game-actions"><button class="btn danger" data-remove="${i}">Remover jogo</button></div></div></details>`}
-function renderGames(){games.innerHTML=cfg.games.map(gameHtml).join('')||'<div class="muted">Nenhum jogo cadastrado.</div>'}
-function renderAll(){siteFields();renderGames();syncJson()}
-function readGameInputs(){document.querySelectorAll('[data-i][data-k]').forEach(el=>{let i=+el.dataset.i,k=el.dataset.k,v=el.value;if(!cfg.games[i])return;if(k==='cat')cfg.games[i].cat=v.split(',').map(x=>x.trim()).filter(Boolean);else if(k==='tips')cfg.games[i].tips=v.split('\n').map(x=>x.trim()).filter(Boolean);else if(k==='dl')cfg.games[i].dl=v.split('\n').map(x=>x.trim()).filter(Boolean).map(line=>{let [name,ext,...rest]=line.split('|');return[(name||'Download').trim(),(ext||'txt').trim(),rest.join('|').replace(/\\n/g,'\n')]});else cfg.games[i][k]=v});syncJson()}
-document.addEventListener('input',e=>{if(e.target.matches('[data-i][data-k]'))readGameInputs()});document.addEventListener('click',e=>{let b=e.target.closest('[data-remove]');if(b){readGameInputs();cfg.games.splice(+b.dataset.remove,1);renderGames();syncJson();toast('Jogo removido')}});
-applySite.onclick=()=>{cfg.heroTitle=heroTitle.value;cfg.heroText=heroText.value;cfg.cats=cats.value.split('\n').map(x=>x.trim()).filter(Boolean).map(x=>{let [id,...rest]=x.split('|');return[(id||'all').trim(),rest.join('|').trim()||id.trim()]});syncJson();toast('Campos aplicados')};
-addGame.onclick=()=>{readGameInputs();cfg.games.push({id:'novo-jogo-'+(cfg.games.length+1),name:'Novo Jogo',cat:['fps'],cover:'linear-gradient(135deg,#7a24d6,#111)',desc:'Descrição do jogo.',tips:['Dica 1'],dl:[]});renderGames();syncJson();window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})};
-saveBtn.onclick=()=>{readGameInputs();applySite.click();localStorage.aresCfg=JSON.stringify(cfg);toast('Preview salvo neste navegador')};
-resetBtn.onclick=()=>{if(!confirm('Restaurar a configuração padrão do site neste navegador?'))return;localStorage.removeItem('aresCfg');cfg=JSON.parse(JSON.stringify(DEFAULT));renderAll();toast('Configuração restaurada')};
-exportBtn.onclick=()=>{readGameInputs();applySite.click();let blob=new Blob([JSON.stringify(cfg,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='ares-config.json';a.click();URL.revokeObjectURL(u);toast('JSON exportado')};
-copyBtn.onclick=async()=>{readGameInputs();applySite.click();try{await navigator.clipboard.writeText(JSON.stringify(cfg,null,2));toast('JSON copiado')}catch(e){jsonBox.select();document.execCommand('copy');toast('JSON copiado')}};
-loadJson.onclick=()=>{try{cfg=JSON.parse(jsonBox.value);renderAll();toast('JSON aplicado')}catch(e){alert('JSON inválido: '+e.message)}};
-loadDefault();
-</script>
-</body></html>
+<body class="admin-body">
+<header class="admin-top">
+  <div class="admin-shell admin-nav">
+    <a class="brand" href="index.html"><img src="assets/ares-mark.svg" alt=""><span class="brand-copy"><strong>AresZ <span>ADMIN</span></strong><small>ARES Performance Hub • v<span class="js-version">4.0.0</span></small></span></a>
+    <div class="admin-actions"><a class="btn btn-secondary btn-sm desktop-only" href="index.html">Ver site</a><a class="btn btn-secondary btn-sm desktop-only" href="bats.html">BAT Center</a><button class="btn btn-secondary btn-sm" id="previewBtn" type="button">Preview</button><button class="btn btn-primary btn-sm" id="savePreviewBtn" type="button">Salvar preview</button></div>
+  </div>
+</header>
+
+<main class="admin-shell admin-main">
+  <section class="admin-hero">
+    <div><div class="eyebrow">ARES CONTENT CONTROL</div><h1>Painel de Administração</h1><div class="muted">Edite o conteúdo publicado, teste em preview local e exporte a configuração em JSON.</div></div>
+    <div class="admin-stats"><div class="admin-stat"><strong id="statGames">0</strong><span>Jogos</span></div><div class="admin-stat"><strong id="statDownloads">0</strong><span>Downloads</span></div><div class="admin-stat"><strong id="statModules">0</strong><span>Módulos</span></div></div>
+  </section>
+
+  <div class="admin-notice">O GitHub Pages é estático. “Salvar preview” grava somente neste navegador e o botão Preview abre <code>index.html?preview=1</code>. Para publicar para todos, exporte a configuração ou peça para atualizar o repositório.</div>
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <section class="admin-panel">
+        <h2>Site & Marca</h2>
+        <label class="admin-label">Owner / assinatura<input id="brandOwner"></label>
+        <label class="admin-label">Nome do produto<input id="brandName"></label>
+        <label class="admin-label">Eyebrow<input id="brandEyebrow"></label>
+        <label class="admin-label">Título principal<textarea id="heroTitleAdmin"></textarea></label>
+        <label class="admin-label">Descrição principal<textarea id="heroTextAdmin"></textarea></label>
+        <label class="admin-label">Nota abaixo do hero<textarea id="heroNoteAdmin"></textarea></label>
+        <label class="admin-label">Versão<input id="versionAdmin"></label>
+        <label class="admin-label">Categorias (ID|Nome)<textarea id="categoriesAdmin"></textarea></label>
+        <div class="admin-buttons"><button class="btn btn-primary btn-sm" id="applySiteBtn" type="button">Aplicar campos</button></div>
+      </section>
+
+      <section class="admin-panel">
+        <h3>Configuração</h3>
+        <div class="admin-buttons two"><button class="btn btn-secondary btn-sm" id="exportBtn" type="button">Exportar JSON</button><button class="btn btn-secondary btn-sm" id="importBtn" type="button">Importar JSON</button></div>
+        <div class="admin-buttons"><button class="btn btn-secondary btn-sm" id="copyJsonBtn" type="button">Copiar JSON</button><button class="btn btn-sm danger-button" id="resetBtn" type="button">Restaurar preview</button></div>
+        <input class="admin-file-input" id="importFile" type="file" accept="application/json,.json">
+        <div class="admin-divider"></div>
+        <textarea class="admin-json" id="jsonAdmin" spellcheck="false"></textarea>
+        <div class="admin-buttons"><button class="btn btn-secondary btn-sm" id="applyJsonBtn" type="button">Aplicar JSON manual</button></div>
+      </section>
+    </aside>
+
+    <section class="admin-content">
+      <div class="admin-section-head">
+        <div><h2>Conteúdo do Hub</h2><p>Use as abas para editar os perfis e módulos sem tocar no código.</p></div>
+        <div class="admin-tabs"><button class="admin-tab active" type="button" data-admin-tab="games">Jogos</button><button class="admin-tab" type="button" data-admin-tab="modules">Otimizadores</button></div>
+      </div>
+
+      <div class="admin-view" data-admin-view="games">
+        <div class="admin-section-head"><div><h2>Game Profiles</h2><p>Nome, capa, plataforma, configurações, dicas e downloads.</p></div><button class="btn btn-primary btn-sm" id="addGameBtn" type="button">+ Adicionar jogo</button></div>
+        <div class="admin-content" id="gamesEditor"></div>
+      </div>
+
+      <div class="admin-view" data-admin-view="modules" hidden>
+        <div class="admin-section-head"><div><h2>Optimizer Suite</h2><p>Internet, mouse/sensibilidade e teclado.</p></div></div>
+        <div class="admin-content" id="modulesEditor"></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="admin-toast" id="adminToast">Salvo</div>
+<script src="assets/site-data.js?v=4.0.0"></script>
+<script src="assets/admin.js?v=4.0.0"></script>
+</body>
+</html>
