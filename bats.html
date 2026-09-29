@@ -5,17 +5,19 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#070911">
   <meta name="description" content="ARES BAT Center — otimizadores AresZ para jogos, rede, mouse, sensibilidade e teclado.">
+  <meta name="color-scheme" content="dark">
   <title>ARES BAT Center • AresZ</title>
   <link rel="icon" type="image/svg+xml" href="assets/ares-mark.svg">
-  <link rel="stylesheet" href="assets/styles.css?v=4.0.0">
+  <link rel="stylesheet" href="assets/styles.css?v=5.0.0">
+  <link rel="stylesheet" href="assets/premium.css?v=5.0.0">
 </head>
 <body>
 <header class="site-header">
   <div class="shell navbar">
-    <a class="brand" href="index.html"><img src="assets/ares-mark.svg" alt=""><span class="brand-copy"><strong>AresZ <span>ARES</span></strong><small>BAT Center • v<span class="js-version">4.0.0</span></small></span></a>
+    <a class="brand" href="index.html"><img src="assets/ares-mark.svg" alt=""><span class="brand-copy"><strong>AresZ <span>ARES</span></strong><small>BAT Center • Remastered</small></span></a>
     <nav class="nav-links" aria-label="Navegação do BAT Center"><a href="#games">Jogos</a><a href="#network">Internet</a><a href="#mouse">Sensibilidade</a><a href="#keyboard">Teclado</a></nav>
-    <div class="nav-actions"><a class="btn btn-secondary btn-sm desktop-only" href="index.html">← Voltar ao Hub</a><a class="btn btn-ghost btn-sm desktop-only" href="admin.html">Admin</a><button class="icon-btn mobile-toggle" id="mobileToggle" aria-label="Abrir menu" aria-expanded="false">☰</button></div>
-    <nav class="mobile-menu" id="mobileMenu"><a href="#games">Jogos</a><a href="#network">Internet</a><a href="#mouse">Sensibilidade</a><a href="#keyboard">Teclado</a><a href="index.html">Voltar ao Hub</a></nav>
+    <div class="nav-actions"><a class="btn btn-secondary btn-sm desktop-only" href="index.html">← Voltar ao Hub</a><a class="btn btn-ghost btn-sm desktop-only" href="admin.html">Admin</a><button class="icon-btn mobile-toggle" id="mobileToggle" type="button" aria-label="Abrir menu" aria-expanded="false">☰</button></div>
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Menu mobile"><a href="#games">Jogos</a><a href="#network">Internet</a><a href="#mouse">Sensibilidade</a><a href="#keyboard">Teclado</a><a href="index.html">Voltar ao Hub</a></nav>
   </div>
 </header>
 
@@ -23,21 +25,21 @@
   <section class="shell bats-hero">
     <div>
       <div class="eyebrow">ARES ADVANCED OPTIMIZER SUITE</div>
-      <h1>Uma central de scripts com <span class="gradient-text">identidade, contexto e controle.</span></h1>
-      <p>Todos os módulos AresZ seguem o mesmo padrão de experiência: menus interativos, diagnóstico, logs, backups ou restauração quando aplicável e separação clara entre jogo, rede e input.</p>
-      <div class="hero-actions"><a class="btn btn-primary" href="#games">Explorar scripts</a><a class="btn btn-secondary" href="index.html#tools">Ferramentas do site</a></div>
+      <h1>Scripts organizados para <span class="gradient-text">sessão, rede e input.</span></h1>
+      <p>A versão remasterizada melhora descoberta, navegação e contexto sem transformar o BAT Center em uma coleção de tweaks aleatórios. Cada módulo permanece separado por finalidade.</p>
+      <div class="hero-actions"><a class="btn btn-primary" href="#games">Explorar scripts</a><a class="btn btn-secondary" href="index.html#tools">Performance Lab</a></div>
     </div>
     <aside class="suite-panel reveal">
       <div class="kicker">ARES SCRIPT STANDARD</div>
       <h3>Advanced Session Stack</h3>
-      <p class="muted">Uma camada de automação para Windows focada em organização e previsibilidade.</p>
+      <p class="muted">Automação de Windows com menus, diagnóstico, logs e caminhos de restauração.</p>
       <div class="suite-list"><div><b>✓</b> Cabeçalho e menus AresZ</div><div><b>✓</b> Diagnóstico antes de ações críticas</div><div><b>✓</b> Logs organizados em %LOCALAPPDATA%\AresZ\ARES</div><div><b>✓</b> Restore ou reversão quando a alteração exige</div></div>
     </aside>
   </section>
 
   <section class="section category-anchor" id="games">
     <div class="shell">
-      <div class="section-head"><div class="section-copy"><div class="eyebrow">GAME SESSION ENGINE</div><h2>Otimizadores por jogo</h2><p>Perfis monitorados para os jogos da biblioteca. Cada BAT possui menu, detecção de processo, diagnóstico, logs e gerenciamento de sessão.</p></div><div class="section-actions"><a class="btn btn-secondary btn-sm" href="index.html#games">Ver perfis dos jogos</a></div></div>
+      <div class="section-head"><div class="section-copy"><div class="eyebrow">GAME SESSION ENGINE</div><h2>Otimizadores por jogo</h2><p>Pesquise pelo jogo ou plataforma. Cada BAT possui menu, detecção de processo, diagnóstico, logs e gerenciamento de sessão.</p></div><div class="section-actions"><a class="btn btn-secondary btn-sm" href="index.html#games">Ver perfis dos jogos</a></div></div>
       <div class="bat-grid" id="gameBatGrid"></div>
       <div class="notice" style="margin-top:18px"><strong>Como usar:</strong> execute como administrador quando solicitado, leia o menu e escolha a ação desejada. Os scripts de jogo não dependem de prioridade Realtime e não alteram anti-cheat, recoil ou arquivos internos.</div>
     </div>
@@ -67,15 +69,15 @@
 
   <section class="section-compact">
     <div class="shell feature-grid">
-      <article class="feature-card reveal"><div class="feature-icon">UI</div><h3>Menus consistentes</h3><p>Todos os scripts seguem um padrão visual AresZ e evitam executar várias ações sem deixar claro o que está acontecendo.</p></article>
-      <article class="feature-card reveal"><div class="feature-icon">LOG</div><h3>Diagnóstico e logs</h3><p>Quando possível, a ferramenta mostra estado do sistema, processo ou rede e grava logs para facilitar troubleshooting.</p></article>
-      <article class="feature-card reveal"><div class="feature-icon">RST</div><h3>Restore planejado</h3><p>Alterações de mouse e teclado possuem restauração; sessões de jogo preservam e recuperam o plano de energia anterior.</p></article>
+      <article class="feature-card reveal"><div class="feature-icon">UI</div><h3>Menus consistentes</h3><p>Os scripts seguem um padrão AresZ e evitam executar várias ações sem deixar claro o que está acontecendo.</p></article>
+      <article class="feature-card reveal"><div class="feature-icon">LOG</div><h3>Diagnóstico e logs</h3><p>Quando possível, a ferramenta mostra estado do sistema, processo ou rede e grava logs para troubleshooting.</p></article>
+      <article class="feature-card reveal"><div class="feature-icon">RST</div><h3>Restore planejado</h3><p>Alterações de mouse e teclado possuem restauração; sessões de jogo recuperam o plano de energia anterior.</p></article>
     </div>
   </section>
 </main>
 
-<footer class="site-footer"><div class="shell footer-grid"><div><a class="brand" href="index.html"><img src="assets/ares-mark.svg" alt=""><span class="brand-copy"><strong>AresZ <span>ARES</span></strong><small>BAT Center</small></span></a><div class="footer-copy">Scripts de automação para Windows organizados por finalidade, com transparência sobre limites e restauração.</div></div><nav class="footer-links"><a href="index.html">Performance Hub</a><a href="#games">Jogos</a><a href="#network">Internet</a><a href="#mouse">Mouse</a><a href="#keyboard">Teclado</a></nav></div></footer>
-<script src="assets/site-data.js?v=4.0.0"></script>
-<script src="assets/bats.js?v=4.0.0"></script>
+<footer class="site-footer"><div class="shell footer-grid"><div><a class="brand" href="index.html"><img src="assets/ares-mark.svg" alt=""><span class="brand-copy"><strong>AresZ <span>ARES</span></strong><small>BAT Center • Remastered</small></span></a><div class="footer-copy">Scripts de automação para Windows organizados por finalidade, com transparência sobre limites e restauração.</div></div><nav class="footer-links" aria-label="Links do BAT Center"><a href="index.html">Performance Hub</a><a href="#games">Jogos</a><a href="#network">Internet</a><a href="#mouse">Mouse</a><a href="#keyboard">Teclado</a></nav></div></footer>
+<script src="assets/site-data.js?v=5.0.0"></script>
+<script src="assets/bats.js?v=5.0.0"></script>
 </body>
 </html>
