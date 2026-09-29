@@ -7,14 +7,48 @@
   <meta name="robots" content="noindex,nofollow">
   <title>ARES Admin • AresZ</title>
   <link rel="icon" type="image/svg+xml" href="assets/ares-mark.svg">
-  <link rel="stylesheet" href="assets/styles.css?v=4.0.0">
-  <link rel="stylesheet" href="assets/admin.css?v=4.0.0">
+  <link rel="stylesheet" href="assets/styles.css?v=4.1.0">
+  <link rel="stylesheet" href="assets/admin.css?v=4.1.0">
 </head>
-<body class="admin-body">
+<body class="admin-body admin-locked">
+
+<section class="admin-login-gate" id="adminLoginGate" aria-label="Login do ARES Admin">
+  <div class="admin-login-orb admin-login-orb-one"></div>
+  <div class="admin-login-orb admin-login-orb-two"></div>
+  <div class="admin-login-shell">
+    <div class="admin-login-brand">
+      <img src="assets/ares-mark.svg" alt="">
+      <div><strong>AresZ <span>ARES</span></strong><small>SECURE ADMIN CONSOLE</small></div>
+    </div>
+    <div class="admin-login-card">
+      <div class="admin-login-badge"><i></i> Área restrita</div>
+      <div class="eyebrow">ARES CONTENT CONTROL</div>
+      <h1>Acesso administrativo</h1>
+      <p>Entre com suas credenciais para abrir o painel de gerenciamento do ARES Performance Hub.</p>
+      <form id="adminLoginForm" autocomplete="off">
+        <label class="admin-login-label" for="adminUsername">Usuário
+          <input id="adminUsername" name="username" type="text" inputmode="text" autocomplete="username" placeholder="Seu usuário" required>
+        </label>
+        <label class="admin-login-label" for="adminPassword">Senha
+          <span class="admin-password-wrap">
+            <input id="adminPassword" name="password" type="password" autocomplete="current-password" placeholder="Sua senha" required>
+            <button id="toggleAdminPassword" class="admin-password-toggle" type="button" aria-pressed="false">Mostrar</button>
+          </span>
+        </label>
+        <button class="btn btn-primary admin-login-submit" id="adminLoginSubmit" type="submit">Entrar no Admin <span aria-hidden="true">→</span></button>
+        <div class="admin-login-status" id="adminLoginStatus" role="status" aria-live="polite">Sessão protegida no navegador atual.</div>
+      </form>
+      <div class="admin-login-meta"><span>ARES Secure Gate</span><span>Session-only access</span><span>Noindex</span></div>
+    </div>
+    <a class="admin-login-back" href="index.html">← Voltar para o ARES Performance Hub</a>
+  </div>
+</section>
+
+<div id="adminApp" hidden aria-hidden="true">
 <header class="admin-top">
   <div class="admin-shell admin-nav">
     <a class="brand" href="index.html"><img src="assets/ares-mark.svg" alt=""><span class="brand-copy"><strong>AresZ <span>ADMIN</span></strong><small>ARES Performance Hub • v<span class="js-version">4.0.0</span></small></span></a>
-    <div class="admin-actions"><a class="btn btn-secondary btn-sm desktop-only" href="index.html">Ver site</a><a class="btn btn-secondary btn-sm desktop-only" href="bats.html">BAT Center</a><button class="btn btn-secondary btn-sm" id="previewBtn" type="button">Preview</button><button class="btn btn-primary btn-sm" id="savePreviewBtn" type="button">Salvar preview</button></div>
+    <div class="admin-actions"><a class="btn btn-secondary btn-sm desktop-only" href="index.html">Ver site</a><a class="btn btn-secondary btn-sm desktop-only" href="bats.html">BAT Center</a><button class="btn btn-secondary btn-sm" id="previewBtn" type="button">Preview</button><button class="btn btn-primary btn-sm" id="savePreviewBtn" type="button">Salvar preview</button><button class="btn btn-ghost btn-sm" id="adminLogoutBtn" type="button">Sair</button></div>
   </div>
 </header>
 
@@ -72,6 +106,9 @@
 </main>
 
 <div class="admin-toast" id="adminToast">Salvo</div>
+</div>
+
+<script src="assets/admin-auth.js?v=4.1.0"></script>
 <script src="assets/site-data.js?v=4.0.0"></script>
 <script src="assets/admin.js?v=4.0.0"></script>
 </body>
