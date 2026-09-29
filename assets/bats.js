@@ -17,7 +17,7 @@
           <div class="bat-head"><div class="bat-icon">${esc(game.short)}</div><div><h3>${esc(game.name)}</h3><small>${esc(game.platform)}</small></div></div>
           <p>${esc(game.description)}</p>
           <div class="bat-tags"><span>Session menu</span><span>Diagnostics</span><span>Logs</span><span>Restore</span></div>
-          <div class="bat-actions"><a class="btn btn-primary btn-sm" href="${esc(download.href)}" download>Baixar BAT</a><button class="btn btn-secondary btn-sm" type="button" data-game-jump="${esc(game.id)}">Ver perfil</button></div>
+          <div class="bat-actions"><a class="btn btn-primary btn-sm" href="${esc(download.href)}" download>Baixar BAT</a><a class="btn btn-secondary btn-sm" href="index.html#games">Ver no Hub</a></div>
         </article>`;
     }).join('');
   }
@@ -59,11 +59,6 @@
     }), { threshold: .08, rootMargin: '40px' });
     nodes.forEach((node) => observer.observe(node));
   }
-
-  document.addEventListener('click', (event) => {
-    const button = event.target.closest('[data-game-jump]');
-    if (button) location.href = `index.html?game=${encodeURIComponent(button.dataset.gameJump)}#games`;
-  });
 
   $$('.js-version').forEach((el) => el.textContent = data.version || '4.0.0');
   $$('.js-game-count').forEach((el) => el.textContent = games.length);
